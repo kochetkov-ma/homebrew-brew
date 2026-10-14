@@ -37,7 +37,7 @@ class Brewdoc < Formula
            File.directory?("licenses") && File.file?("version.json")
       odie "Unexpected Brewdoc archive layout"
     end
-    libexec.install Dir.children(".")
+    libexec.install Dir.children(".") - [".brew_home"]
     bin.install_symlink libexec/"brewdoc"
   end
 
