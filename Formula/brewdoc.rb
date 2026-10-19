@@ -1,24 +1,24 @@
-# Source: 6c846e79a188731bef1a6d4aa91cc4c4ed72f515
+# Source: 59fefc96dcfb105cea394877849b0dd91e42804a
 require "json"
 
 class Brewdoc < Formula
   desc "Deterministic document-to-Markdown conversion"
   homepage "https://github.com/kochetkov-ma/brewdoc"
-  version "0.7.0"
+  version "0.7.1"
   license "MIT"
 
   on_macos do
     depends_on arch: :arm64
     depends_on macos: :sequoia
     preserve_rpath
-    url "https://github.com/kochetkov-ma/brewdoc/releases/download/v0.7.0/brewdoc-0.7.0-macos-arm64.tar.gz"
-    sha256 "f2249c426834fb7c95ab90880bdb4b54fbf246c7b8be965f1e08b8b85fe376dc"
+    url "https://github.com/kochetkov-ma/brewdoc/releases/download/v0.7.1/brewdoc-0.7.1-macos-arm64.tar.gz"
+    sha256 "20b46150ff8ffabc51e4bfd1faa7a1124525581b6d7c1a8c50b7ddaa145a7e57"
   end
 
   on_linux do
     depends_on arch: :x86_64
-    url "https://github.com/kochetkov-ma/brewdoc/releases/download/v0.7.0/brewdoc-0.7.0-linux-x64.tar.gz"
-    sha256 "89ea26e7c36aee4e737622e860196efbb73d5b604d31553a00cd2fc0356cc1cb"
+    url "https://github.com/kochetkov-ma/brewdoc/releases/download/v0.7.1/brewdoc-0.7.1-linux-x64.tar.gz"
+    sha256 "370afab40d9b5c729fe983b969a35d5ac8faf882721906c6d8ab6152daaa4856"
   end
 
   skip_clean "libexec"
