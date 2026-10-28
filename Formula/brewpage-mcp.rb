@@ -9,7 +9,7 @@ class BrewpageMcp < Formula
   license "MIT"
 
   livecheck do
-    url "https://registry.npmjs.org/brewpage-mcp"
+    url "https://registry.npmjs.org/brewpage-mcp/-/brewpage-mcp-1.15.1.tgz"
     strategy :npm
   end
 
@@ -27,6 +27,7 @@ class BrewpageMcp < Formula
   end
 
   test do
+    # GIVEN installed stdio executable; WHEN initialized; THEN identity and offline tools match.
     IO.popen([bin/"brewpage-mcp"], "r+") do |io|
       request = { jsonrpc: "2.0", id: 1, method: "initialize", params: {
         protocolVersion: "2025-11-25", capabilities: {}, clientInfo: { name: "homebrew-test", version: "1.0.0" }
@@ -35,15 +36,17 @@ class BrewpageMcp < Formula
       io.flush
       assert_equal io, io.wait_readable(15), "MCP initialization must answer offline"
       response = JSON.parse(io.gets)
-      assert_equal "brewpage-mcp", response.dig("result", "serverInfo", "name"), "Server identity must match"
-      assert_equal version.to_s, response.dig("result", "serverInfo", "version"), "Server version must match"
+      assert_equal({ "name" => "brewpage-mcp", "version" => version.to_s },
+                   response.dig("result", "serverInfo"), "Server identity must match")
       io.puts({ jsonrpc: "2.0", method: "notifications/initialized" }.to_json)
       io.puts({ jsonrpc: "2.0", id: 2, method: "tools/list", params: {} }.to_json)
       io.flush
       assert_equal io, io.wait_readable(15), "MCP tool discovery must answer offline"
       names = JSON.parse(io.gets).dig("result", "tools").map { |tool| tool.fetch("name") }.sort
-      assert_equal 20, names.length, "All twenty tool schemas must be available"
-      assert_includes names, "publish_site", "Site publishing schema must be present"
+      expected = %w[bind_token delete_resource get_json get_kv get_limits get_page get_stats mint_token
+                    publish_file publish_html publish_json publish_kv publish_site republish_site
+                    search_gallery set_kv set_visibility update_hosting update_html update_json]
+      assert_equal expected, names, "All twenty tool schemas must match"
     end
   end
 end
