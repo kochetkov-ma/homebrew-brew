@@ -4,23 +4,26 @@ require "json"
 class Brewdoc < Formula
   desc "Deterministic document-to-Markdown conversion"
   homepage "https://github.com/kochetkov-ma/brewdoc"
+  if OS.mac?
+    url "https://github.com/kochetkov-ma/brewdoc/releases/download/v0.7.1/brewdoc-0.7.1-macos-arm64.tar.gz"
+    sha256 "20b46150ff8ffabc51e4bfd1faa7a1124525581b6d7c1a8c50b7ddaa145a7e57"
+  else
+    url "https://github.com/kochetkov-ma/brewdoc/releases/download/v0.7.1/brewdoc-0.7.1-linux-x64.tar.gz"
+    sha256 "370afab40d9b5c729fe983b969a35d5ac8faf882721906c6d8ab6152daaa4856"
+  end
   version "0.7.1"
   license "MIT"
 
   on_macos do
     depends_on arch: :arm64
     depends_on macos: :sequoia
-    preserve_rpath
-    url "https://github.com/kochetkov-ma/brewdoc/releases/download/v0.7.1/brewdoc-0.7.1-macos-arm64.tar.gz"
-    sha256 "20b46150ff8ffabc51e4bfd1faa7a1124525581b6d7c1a8c50b7ddaa145a7e57"
   end
 
   on_linux do
     depends_on arch: :x86_64
-    url "https://github.com/kochetkov-ma/brewdoc/releases/download/v0.7.1/brewdoc-0.7.1-linux-x64.tar.gz"
-    sha256 "370afab40d9b5c729fe983b969a35d5ac8faf882721906c6d8ab6152daaa4856"
   end
 
+  preserve_rpath
   skip_clean "libexec"
 
   def install
@@ -31,12 +34,12 @@ class Brewdoc < Formula
     if OS.linux?
       glibc = Utils.safe_popen_read("/usr/bin/getconf", "GNU_LIBC_VERSION").strip
       parsed = /\Aglibc (\d+)\.(\d+)\z/.match(glibc)
-      odie "Brewdoc requires system glibc 2.35 or newer" unless parsed && (parsed.captures.map(&:to_i) <=> [2, 35]) >= 0
+      glibc_ok = parsed && (parsed.captures.map(&:to_i) <=> [2, 35]) >= 0
+      odie "Brewdoc requires system glibc 2.35 or newer" unless glibc_ok
     end
-    unless File.executable?("brewdoc") && File.directory?("_internal") &&
-           File.directory?("licenses") && File.file?("version.json")
-      odie "Unexpected Brewdoc archive layout"
-    end
+    layout_ok = File.executable?("brewdoc") && File.directory?("_internal") &&
+                File.directory?("licenses") && File.file?("version.json")
+    odie "Unexpected Brewdoc archive layout" unless layout_ok
     libexec.install Dir.children(".") - [".brew_home"]
     libexec.chmod 0755
     bin.install_symlink libexec/"brewdoc"
