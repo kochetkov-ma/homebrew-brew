@@ -3,13 +3,13 @@ require "json"
 class BrewpageMcp < Formula
   desc "Publish pages, static sites, JSON and files through MCP"
   homepage "https://github.com/kochetkov-ma/brewpage-openapi/tree/main/mcp-server"
-  url "https://github.com/kochetkov-ma/brewpage-openapi/archive/57e1603b5f1101bd66204e64b9e0a13743e87672.tar.gz"
-  version "1.15.1"
-  sha256 "2834a6bd800e30c28212d9697266e74ea27f75ee5243317261d41b73dab06d0f"
+  url "https://github.com/kochetkov-ma/brewpage-openapi/archive/2969cbcb0e9756e84864d26436c1dbcc22674ef6.tar.gz"
+  version "1.19.0"
+  sha256 "3cc362e9417fb091d601c52f0930fea7c94d217fda0d06f7712e72232c814632"
   license "MIT"
 
   livecheck do
-    url "https://registry.npmjs.org/brewpage-mcp/-/brewpage-mcp-1.15.1.tgz"
+    url "https://registry.npmjs.org/brewpage-mcp/-/brewpage-mcp-1.19.0.tgz"
     strategy :npm
   end
 
@@ -43,10 +43,12 @@ class BrewpageMcp < Formula
       io.flush
       assert_equal io, io.wait_readable(15), "MCP tool discovery must answer offline"
       names = JSON.parse(io.gets).dig("result", "tools").map { |tool| tool.fetch("name") }.sort
-      expected = %w[bind_token delete_resource get_json get_kv get_limits get_page get_stats mint_token
-                    publish_file publish_html publish_json publish_kv publish_site republish_site
-                    search_gallery set_kv set_visibility update_hosting update_html update_json]
-      assert_equal expected, names, "All twenty tool schemas must match"
+      expected = %w[bind_token check_domain configure_page_data delete_page_data delete_resource get_guide
+                    get_json get_kv get_limits get_page get_page_data get_stats list_domains mint_token
+                    publish_file publish_html publish_json publish_kv publish_site remove_domain
+                    republish_site search_gallery set_domain set_kv set_page_data set_title set_visibility
+                    update_hosting update_html update_json]
+      assert_equal expected, names, "All thirty tool schemas must match"
     end
   end
 end
