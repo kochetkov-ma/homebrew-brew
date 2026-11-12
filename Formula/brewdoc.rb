@@ -1,17 +1,17 @@
-# Source: 59fefc96dcfb105cea394877849b0dd91e42804a
+# Source: 18085635cd66ade80b90b2e4870d5d2c5a8883d3
 require "json"
 
 class Brewdoc < Formula
   desc "Deterministic document-to-Markdown conversion"
   homepage "https://github.com/kochetkov-ma/brewdoc"
   if OS.mac?
-    url "https://github.com/kochetkov-ma/brewdoc/releases/download/v0.7.1/brewdoc-0.7.1-macos-arm64.tar.gz"
-    sha256 "20b46150ff8ffabc51e4bfd1faa7a1124525581b6d7c1a8c50b7ddaa145a7e57"
+    url "https://github.com/kochetkov-ma/brewdoc/releases/download/v0.8.0/brewdoc-0.8.0-macos-arm64.tar.gz"
+    sha256 "2723ed13d8907bf6bb2c5d7a4c9eb38ac3af70502c9cf1470d4106562a769358"
   else
-    url "https://github.com/kochetkov-ma/brewdoc/releases/download/v0.7.1/brewdoc-0.7.1-linux-x64.tar.gz"
-    sha256 "370afab40d9b5c729fe983b969a35d5ac8faf882721906c6d8ab6152daaa4856"
+    url "https://github.com/kochetkov-ma/brewdoc/releases/download/v0.8.0/brewdoc-0.8.0-linux-x64.tar.gz"
+    sha256 "c1db7ac4b1def2d4ac69ded5a406a5cb8b32e3ad882a0738e5f572be79724b58"
   end
-  version "0.7.1"
+  version "0.8.0"
   license "MIT"
 
   on_macos do
