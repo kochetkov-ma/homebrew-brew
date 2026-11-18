@@ -4,9 +4,9 @@ require "json"
 class BrewpageMcp < Formula
   desc "Publish pages, static sites, JSON and files through MCP"
   homepage "https://github.com/kochetkov-ma/brewpage-openapi/tree/main/mcp-server"
-  url "https://github.com/kochetkov-ma/brewpage-openapi/archive/9e5fccfad57c7d03c5f3868d767a63353cf74caf.tar.gz"
+  url "https://github.com/kochetkov-ma/brewpage-openapi/archive/0b918ce7253cd17a9162bae7d211104f46d57fdc.tar.gz"
   version "3.0.0"
-  sha256 "c8e118ed3f3756f341b791dd7196c030f2f604a30ea6b8ae72540417580c4e6e"
+  sha256 "958e8106d78b960437d3771e8526915492296b9c26380cdf8cea42bc7293e275"
   license "MIT"
 
   livecheck do
