@@ -1,15 +1,16 @@
+require "io/wait"
 require "json"
 
 class BrewpageMcp < Formula
   desc "Publish pages, static sites, JSON and files through MCP"
   homepage "https://github.com/kochetkov-ma/brewpage-openapi/tree/main/mcp-server"
-  url "https://github.com/kochetkov-ma/brewpage-openapi/archive/2969cbcb0e9756e84864d26436c1dbcc22674ef6.tar.gz"
-  version "1.19.0"
-  sha256 "3cc362e9417fb091d601c52f0930fea7c94d217fda0d06f7712e72232c814632"
+  url "https://github.com/kochetkov-ma/brewpage-openapi/archive/9e5fccfad57c7d03c5f3868d767a63353cf74caf.tar.gz"
+  version "3.0.0"
+  sha256 "c8e118ed3f3756f341b791dd7196c030f2f604a30ea6b8ae72540417580c4e6e"
   license "MIT"
 
   livecheck do
-    url "https://registry.npmjs.org/brewpage-mcp/-/brewpage-mcp-1.19.0.tgz"
+    url "https://registry.npmjs.org/brewpage-mcp/-/brewpage-mcp-3.0.0.tgz"
     strategy :npm
   end
 
@@ -27,8 +28,13 @@ class BrewpageMcp < Formula
   end
 
   test do
-    # GIVEN installed stdio executable; WHEN initialized; THEN identity and offline tools match.
-    IO.popen([bin/"brewpage-mcp"], "r+") do |io|
+    # GIVEN the installed anonymous server WHEN a client connects THEN the compact catalog matches.
+    env = {
+      "BREWPAGE_URL"                => "http://127.0.0.1:1",
+      "BREWPAGE_MCP_CATALOG"        => "compact",
+      "BREWPAGE_MCP_TOOL_SELECTION" => nil,
+    }
+    IO.popen(env, [(bin/"brewpage-mcp").to_s, "--anonymous"], "r+") do |io|
       request = { jsonrpc: "2.0", id: 1, method: "initialize", params: {
         protocolVersion: "2025-11-25", capabilities: {}, clientInfo: { name: "homebrew-test", version: "1.0.0" }
       } }
@@ -43,12 +49,10 @@ class BrewpageMcp < Formula
       io.flush
       assert_equal io, io.wait_readable(15), "MCP tool discovery must answer offline"
       names = JSON.parse(io.gets).dig("result", "tools").map { |tool| tool.fetch("name") }.sort
-      expected = %w[bind_token check_domain configure_page_data delete_page_data delete_resource get_guide
-                    get_json get_kv get_limits get_page get_page_data get_stats list_domains mint_token
-                    publish_file publish_html publish_json publish_kv publish_site remove_domain
-                    republish_site search_gallery set_domain set_kv set_page_data set_title set_visibility
-                    update_hosting update_html update_json]
-      assert_equal expected, names, "All thirty tool schemas must match"
+      expected = %w[account delete_page_data delete_publication domains get_guide list_publications
+                    notifications publication_settings publish read_page_data read_publication
+                    update_publication write_page_data]
+      assert_equal expected, names, "The thirteen compact tool names must match"
     end
   end
 end
