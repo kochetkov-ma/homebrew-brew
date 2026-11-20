@@ -8,7 +8,7 @@ Install the MCP server for publishing and managing pages, built static sites, JS
 brew install kochetkov-ma/brew/brewpage-mcp
 ```
 
-Configure your MCP client to run `brewpage-mcp` with stdio transport. The 3.0.0 formula builds from a checksummed source commit and locked npm dependencies.
+Configure your MCP client to run `brewpage-mcp` with stdio transport. The 3.0.1 formula builds from a checksummed source commit and locked npm dependencies.
 
 ```sh
 brew test kochetkov-ma/brew/brewpage-mcp

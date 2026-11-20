@@ -4,13 +4,13 @@ require "json"
 class BrewpageMcp < Formula
   desc "Publish pages, static sites, JSON and files through MCP"
   homepage "https://github.com/kochetkov-ma/brewpage-openapi/tree/main/mcp-server"
-  url "https://github.com/kochetkov-ma/brewpage-openapi/archive/8c83d9c1056b8e38eda085d23919c160363e34d2.tar.gz"
-  version "3.0.0"
-  sha256 "1cbe5be80ac19d22e02aa9188d01289a9ac5a32c75cd6577d5ff6ca1b7e3e161"
+  url "https://github.com/kochetkov-ma/brewpage-openapi/archive/052b69d1d9022f74a6a353130d5ed974cc018775.tar.gz"
+  version "3.0.1"
+  sha256 "34b3ea06484f3f8090c2a417f16b06876e9d100e50823a973ca2461b17fb608c"
   license "MIT"
 
   livecheck do
-    url "https://registry.npmjs.org/brewpage-mcp/-/brewpage-mcp-3.0.0.tgz"
+    url "https://registry.npmjs.org/brewpage-mcp/-/brewpage-mcp-3.0.1.tgz"
     strategy :npm
   end
 
