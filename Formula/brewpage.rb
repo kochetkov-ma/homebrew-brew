@@ -1,8 +1,8 @@
 class Brewpage < Formula
   desc "Publish a file or stdin to brewpage.app and print the share link"
   homepage "https://github.com/kochetkov-ma/brewpage-cli"
-  url "https://github.com/kochetkov-ma/brewpage-cli/releases/download/v0.1.0/brewpage-0.1.0.tgz"
-  sha256 "dffc5e44fa2cfab63156c64d1a1fb9d31954f258895c938a897fe9df666a8888"
+  url "https://github.com/kochetkov-ma/brewpage-cli/releases/download/v0.1.1/brewpage-0.1.1.tgz"
+  sha256 "4ac68888f417a24e610a5e2b44cdb4a08465baeed6fe50c2fb829c803bb3ee35"
   license "Apache-2.0"
 
   depends_on "node"
