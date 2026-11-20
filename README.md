@@ -18,6 +18,17 @@ The offline test starts `brewpage-mcp --anonymous` and checks the 13 compact too
 
 The MCP client is MIT; the hosted BrewPage service is proprietary. Publications expire. See [the server documentation](https://github.com/kochetkov-ma/brewpage-openapi/tree/main/mcp-server).
 
+## BrewPage CLI
+
+Install the `brewpage` command to publish a file or stdin to brewpage.app and get one share link:
+
+```sh
+brew install kochetkov-ma/brew/brewpage
+echo '# Hello' | brewpage -
+```
+
+Stdout carries only the link. The private management link and owner token go to a receipts file readable only by you. Publications are unlisted unless you pass `--public`, and expire (`--ttl N` sets the days). `brew test kochetkov-ma/brew/brewpage` runs offline. The CLI is Apache-2.0; the hosted BrewPage service is proprietary. See [the CLI README](https://github.com/kochetkov-ma/brewpage-cli#readme).
+
 ## Brewdoc
 
 This tap installs the complete Brewdoc native bundle on macOS ARM64 and Linux x64/glibc.
